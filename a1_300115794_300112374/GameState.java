@@ -7,9 +7,24 @@
  */
 
 enum GameState{
-	PLAYING, DRAW, XWIN, OWIN;
+
 	// YOUR CODE HERE
+
+	PLAYING, 
+	DRAW, 
+	XWIN, 
+	OWIN;
 	
+	private GameState currentState = PLAYING;
+
+	public GameState getGameState() {
+		return currentState;
+	}
+
+	public void setCurrentState(GameState currentState) {
+		this.currentState = currentState;
+	}
+
 }
 
 
@@ -34,4 +49,6 @@ diagnonal its tricky so ill get back to this later
 use sizeWin from TicTacToeGame.java to determine how many in a row are needed for a win
 
 */
+
+
 
