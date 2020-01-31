@@ -51,8 +51,14 @@ public class TicTacToe{
         
         game = new TicTacToeGame(lines, columns,win);
 
+        while (gameState.PLAYING && rounds < lines*columns){
+            play()
+        }
 
-        // YOUR CODE HERE
+        /*
+        * while gameState.PLAYING && rounds < lines*columns
+        * play()
+        */
 
 
     }
