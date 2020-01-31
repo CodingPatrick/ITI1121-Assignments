@@ -1,4 +1,4 @@
-/**
+ /**
  * The class <b>TicTacToeGame</b> is the
  * class that implements the Tic Tac Toe Game.
  * It contains the grid and tracks its progress.
@@ -173,9 +173,12 @@ public class TicTacToeGame {
     *  the value at index i in the variable board.
   	*/
 	public CellValue valueAt(int i) {
+		if (0<i<lines*columns){
 		return board[i-1];
-
-
+		}
+		else {
+			System.out.println("Index value is invalid");
+		}
 	}
 
    /**
@@ -197,9 +200,46 @@ public class TicTacToeGame {
     * selected by the next player
   	*/
 	public void play(int i) {
+		if (((i-1) < 0)|| (i > (lines*columns))){
+			System.out.print("Index value is invalid");
+		}
+		else if (board[i-1] != CellValue.EMPTY){
+			System.out.print("Index value is invalid, cell is not empty");
+		}
 
+		else{
+			board[i-1] = nextCellValue();
+			round++;
+			setGameState();
+			toString();
+			getGameState();
+			if (! gameState.PLAYING){
+				if (gameState.XWIN){
+					System.out.print("X has won!");
+				}
+				else if (gameState.OWIN){
+					System.out.print("O has won!");
+				}
+				else {
+					System.out.print("It is a draw!")
+				}
+			}
 
-		// YOUR CODE HERE 
+		}
+
+		/* so basically this is the part that happens when someone puts a number to play on
+		* so first you convert the index number to i-1, so then you check if i-1 < 0 || i-1 > lines*columns
+		* if it is then print out an error 
+		* so then you check if board[i-1] != CellValue.EMPTY
+		* print out an error
+		* so if the move is valid, board[i-1] = nextCellValue()
+		* then you do round ++
+		* setGameState 
+		* toString print with the added thing
+		* getGameState, if == gameState.PLAYING; then break
+		* else then you print out either X or O wins or draw
+		* have to initialize a one time use variable that stores the winner BUT doesnt change if you keep playing
+		*/
 
 	
 	}
@@ -240,8 +280,23 @@ public class TicTacToeGame {
   	*/
 
 	public String toString(){
+		int cellz = 0;
 
-		// YOUR CODE HERE 
+		for (int i=0; i<lines; i++){
+			for(int j=0; j<columns; j++){
+				System.out.println( board[cellz] +"|");
+				cellz++;
+			}
+			System.out.print("-----"*columns);
+		}
+
+
+		/* so here we do a nested for loop, print board[index] for a cell then + "|" while j < columns
+		* then print "----" which is the size of a cell x the number of columns i guess
+		* then it loops and does it for i < lines
+		* now i need a counter for the cells 
+		* so ill initialize it before the loop and just do cellz++ in the j for loop
+		*/
 
 	}
 
