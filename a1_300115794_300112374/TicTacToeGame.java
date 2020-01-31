@@ -174,7 +174,7 @@ public class TicTacToeGame {
   	*/
 	public CellValue valueAt(int i) {
 		if (0<i<lines*columns){
-		return board[i-1];
+			return board[i-1];
 		}
 		else {
 			System.out.println("Index value is invalid");
