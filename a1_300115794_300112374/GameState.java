@@ -17,57 +17,6 @@ enum GameState{
 
 }
 
-private GameState currentState = PLAYING;
-private int countV = 1;
-private int countH = 1;
-private int countD = 1;
-
-public void setCurrentState(GameState currentState) {
-
-	// check vertical
-	if(currentState == PLAYING){
-		for(int i = 0; i < sizeWin; i++){
-			if( board[i] == board[i + lines.length]){
-				countV = countV + 1;
-			}
-			if( board[i] == board[i - lines.length]){
-				countV = counV + 1
-			}
-		}
-		if(countV == sizeWin){
-			if (level % 2 == 0){
-				currentState = XWIN;
-			}
-			else{
-				currentState = OWIN;
-			}
-		}
-	}
-
-	// check horizontal
-	else if(currentState == PLAYING){
-		for(int i = 0; i < sizeWin; i++){
-			if( board[i] == board[i + 1]){
-				countH = countH + 1;
-			}
-			if( board[i] == board[i - 1]){
-				countH = countH + 1
-			}
-		}
-		if(countH == sizeWin){
-			if (level % 2 == 0){
-				currentState = XWIN;
-			}
-			else{
-				currentState = OWIN;
-			}
-		}
-	}
-
-	// check diagonal
-
-}
-
 
 /* for gamestate, we have to use CellValue. 
 verify game state in this order:
