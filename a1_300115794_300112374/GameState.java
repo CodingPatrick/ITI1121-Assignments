@@ -14,16 +14,57 @@ enum GameState{
 	DRAW, 
 	XWIN, 
 	OWIN;
-	
-	private GameState currentState = PLAYING;
 
-	public GameState getGameState() {
-		return currentState;
+}
+
+private GameState currentState = PLAYING;
+private int countV = 1;
+private int countH = 1;
+private int countD = 1;
+
+public void setCurrentState(GameState currentState) {
+
+	// check vertical
+	if(currentState == PLAYING){
+		for(int i = 0; i < sizeWin; i++){
+			if( board[i] == board[i + lines.length]){
+				countV = countV + 1;
+			}
+			if( board[i] == board[i - lines.length]){
+				countV = counV + 1
+			}
+		}
+		if(countV == sizeWin){
+			if (level % 2 == 0){
+				currentState = XWIN;
+			}
+			else{
+				currentState = OWIN;
+			}
+		}
 	}
 
-	public void setCurrentState(GameState currentState) {
-		this.currentState = currentState;
+	// check horizontal
+	else if(currentState == PLAYING){
+		for(int i = 0; i < sizeWin; i++){
+			if( board[i] == board[i + 1]){
+				countH = countH + 1;
+			}
+			if( board[i] == board[i - 1]){
+				countH = countH + 1
+			}
+		}
+		if(countH == sizeWin){
+			if (level % 2 == 0){
+				currentState = XWIN;
+			}
+			else{
+				currentState = OWIN;
+			}
+		}
 	}
+
+	// check diagonal
 
 }
 
