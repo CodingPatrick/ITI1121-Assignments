@@ -13,35 +13,36 @@ public class TicTacToeGame {
    /**
 	* The board of the game, stored as a one dimension array.
 	*/
-	private CellValue[] board;
+	public CellValue[] board;
 
    /**
 	* level records the number of rounds that have been
 	* played so far. 
 	*/
-	private int level;
+	public int level;
 
    /**
 	* gameState records the current state of the game.
 	*/
-	private GameState gameState = PLAYING;
+	public GameState gameState;
+
 
    /**
 	* lines is the number of lines in the grid
 	*/
-	private int lines;
+	public int lines;
 	
 
    /**
 	* columns is the number of columns in the grid
 	*/
-	private int columns;
+	public int columns;
 
    /**
 	* sizeWin is the number of cell of the same type
 	* that must be aligned to win the game
 	*/
-	private int sizeWin;
+	public int sizeWin;
 	
 
    /**
@@ -93,6 +94,8 @@ public class TicTacToeGame {
 			board[i] = CellValue.EMPTY;
 		}
 	}
+
+
 
    /**
 	* getter for the variable lines
@@ -170,11 +173,12 @@ public class TicTacToeGame {
     *  the value at index i in the variable board.
   	*/
 	public CellValue valueAt(int i) {
-		if (0<i<lines*columns){
+		if (0<i && i<lines*columns){
 			return board[i-1];
 		}
 		else {
 			System.out.println("Index value is invalid");
+			return null;
 		}
 	}
 
@@ -206,15 +210,15 @@ public class TicTacToeGame {
 
 		else{
 			board[i-1] = nextCellValue();
-			round++;
-			setGameState();
+			level++;
+			setGameState(i);
 			toString();
 			getGameState();
-			if (! gameState.PLAYING){
-				if (gameState.XWIN){
+			if (gameState != GameState.PLAYING){
+				if (gameState == GameState.XWIN){
 					System.out.print("X has won!");
 				}
-				else if (gameState.OWIN){
+				else if (gameState == GameState.OWIN){
 					System.out.print("O has won!");
 				}
 				else {
@@ -259,47 +263,47 @@ public class TicTacToeGame {
     * been set
   	*/
 
+
 	private void setGameState(int i){
-		
-		// YOUR CODE HERE
+
 		int countV = 1;
 		int countH = 1;
 		int countDr = 1;
 		int countDl = 1; 
 
 		// check vertical
-		if(gameState == PLAYING){
-			for(int i = 0; i < sizeWin;){
-				if( board[i] == board[i + lines.length]){
+		if(gameState == GameState.PLAYING){
+			for(i = 0; i < sizeWin;){
+				if( board[i] == board[i + lines]){
 					countV = countV + 1;
 				}
-				i = i + lines.length;
+				i = i + lines;
 			}
-			for(int i = 0; i < sizeWin;){
-				if( board[i] == board[i - lines.length]){
-					countV = counV + 1;
+			for(i = 0; i < sizeWin;){
+				if( board[i] == board[i - lines]){
+					countV = countV + 1;
 				}
-				i = i - lines.length;
+				i = i - lines;
 			}
 			if(countV == sizeWin){
 				if (level % 2 == 0){
-					gameState = XWIN;
+					gameState = GameState.XWIN;
 				}
 				else{
-					gameState = OWIN;
+					gameState = GameState.OWIN;
 				}
 			}
 		}
 
 		// check horizontal
-		if(gameState == PLAYING){
-			for(int i = 0; i < sizeWin; i++){
+		if(gameState == GameState.PLAYING){
+			for(i = 0; i < sizeWin; i++){
 				if( board[i] == board[i + 1]){
 					countH = countH + 1;
 				}
 				i = i + 1;
 			}
-			for(int i = 0; i < sizeWin; i++){
+			for(i = 0; i < sizeWin; i++){
 				if( board[i] == board[i - 1]){
 					countH = countH + 1;
 				}
@@ -308,62 +312,63 @@ public class TicTacToeGame {
 
 			if(countH == sizeWin){
 				if (level % 2 == 0){
-					gameState = XWIN;
+					gameState = GameState.XWIN;
 				}
 				else{
-					gameState = OWIN;
+					gameState = GameState.OWIN;
 				}
 			}
 		}
 
 		// check diagonal "/"
-		if(gameState == PLAYING){
-			for(int i = 0; i < sizeWin; i++){
-				if( board[i] == board[i + (lines.length - 1)]){
+		if(gameState == GameState.PLAYING){
+			for(i = 0; i < sizeWin; i++){
+				if( board[i] == board[i + (lines - 1)]){
 					countDr = countDr + 1;
 				}
-				i = i + (lines.length - 1);
+				i = i + (lines - 1);
 			}
-			for(int i = 0; i < sizeWin; i++){
-				if( board[i] == board[i - (lines.length - 1)]){
+			for(i = 0; i < sizeWin; i++){
+				if( board[i] == board[i - (lines - 1)]){
 					countDr = countDr + 1;
 				}
-				i = i - (lines.length - 1);
+				i = i - (lines - 1);
 			}
 			if(countDr == sizeWin){
 				if (level % 2 == 0){
-					gameState = XWIN;
+					gameState = GameState.XWIN;
 				}
 				else{
-					gameState = OWIN;
+					gameState = GameState.OWIN;
 				}
 			}
 		}
 
 		// check diagonal "\"
-		if(gameState == PLAYING){
-			for(int i = 0; i < sizeWin; i++){
-				if( board[i] == board[i + (lines.length + 1)]){
+		if(gameState == GameState.PLAYING){
+			for(i = 0; i < sizeWin; i++){
+				if( board[i] == board[i + (lines + 1)]){
 					countDl = countDl + 1;
 				}
-				i = i + (lines.length + 1);
+				i = i + (lines + 1);
 			}
-			for(int i = 0; i < sizeWin; i++){
-				if( board[i] == board[i - (lines.length + 1)]){
+			for(i = 0; i < sizeWin; i++){
+				if( board[i] == board[i - (lines + 1)]){
 					countDl = countDl + 1;
 				}
-				i = i - (lines.length + 1);
+				i = i - (lines + 1);
 			}
 			if(countDl == sizeWin){
 				if (level % 2 == 0){
-					gameState = XWIN;
+					gameState = GameState.XWIN;
 				}
 				else{
-					gameState = OWIN;
+					gameState = GameState.OWIN;
 				}
 			}
 		}
 	}
+
 
 
    /**
@@ -375,16 +380,25 @@ public class TicTacToeGame {
   	*/
 
 	public String toString(){
-		int cellz = 0;
+		final String nextLine;
 
-		for (int i=0; i<lines; i++){
-			for(int j=0; j<columns; j++){
-				System.out.println( board[cellz] +"|");
-				cellz++;
-			}
-			System.out.print("-----"*columns);
-		}
+		nextLine = System.getProperty("line.separator");
+		String thisLine = "";
+        String boardString = "";
+        int cellz=0;
+        String between = "----";
 
+        for (int i=0; i<lines; i++){
+        	for (int j=0; j<columns; j++){
+        		thisLine += (board[cellz]+ " | ");
+        		cellz++;
+        	}
+        	thisLine = thisLine.substring(0, thisLine.length()-2);
+        	boardString += thisLine + nextLine;
+        	thisLine = "";
+        }
+        boardString = boardString.substring(0, boardString.length()-between.length()-1);
+        return boardString;
 
 		/* so here we do a nested for loop, print board[index] for a cell then + "|" while j < columns
 		* then print "----" which is the size of a cell x the number of columns i guess
