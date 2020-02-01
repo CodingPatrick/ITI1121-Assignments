@@ -24,8 +24,7 @@ public class TicTacToeGame {
    /**
 	* gameState records the current state of the game.
 	*/
-	private GameState gameState;
-
+	private GameState gameState = PLAYING;
 
    /**
 	* lines is the number of lines in the grid
@@ -94,8 +93,6 @@ public class TicTacToeGame {
 			board[i] = CellValue.EMPTY;
 		}
 	}
-
-
 
    /**
 	* getter for the variable lines
@@ -221,7 +218,7 @@ public class TicTacToeGame {
 					System.out.print("O has won!");
 				}
 				else {
-					System.out.print("It is a draw!")
+					System.out.print("It is a draw!");
 				}
 			}
 
@@ -262,13 +259,111 @@ public class TicTacToeGame {
     * been set
   	*/
 
-
 	private void setGameState(int i){
+		
+		// YOUR CODE HERE
+		int countV = 1;
+		int countH = 1;
+		int countDr = 1;
+		int countDl = 1; 
 
-		// YOUR CODE HERE 
+		// check vertical
+		if(gameState == PLAYING){
+			for(int i = 0; i < sizeWin;){
+				if( board[i] == board[i + lines.length]){
+					countV = countV + 1;
+				}
+				i = i + lines.length;
+			}
+			for(int i = 0; i < sizeWin;){
+				if( board[i] == board[i - lines.length]){
+					countV = counV + 1
+				}
+				i = i - lines.length;
+			}
+			if(countV == sizeWin){
+				if (level % 2 == 0){
+					gameState = XWIN;
+				}
+				else{
+					gameState = OWIN;
+				}
+			}
+		}
 
+		// check horizontal
+		else if(gameState == PLAYING){
+			for(int i = 0; i < sizeWin; i++){
+				if( board[i] == board[i + 1]){
+					countH = countH + 1;
+				}
+				i = i + 1;
+			}
+			for(int i = 0; i < sizeWin; i++){
+				if( board[i] == board[i - 1]){
+					countH = countH + 1
+				}
+				i = i - 1;
+			}
+
+			if(countH == sizeWin){
+				if (level % 2 == 0){
+					gameState = XWIN;
+				}
+				else{
+					gameState = OWIN;
+				}
+			}
+		}
+
+		// check diagonal "/"
+		else if(gameState == PLAYING){
+			for(int i = 0; i < sizeWin; i++){
+				if( board[i] == board[i + (lines.length - 1)]){
+					countDr = countDr + 1;
+				}
+				i = i + (lines.length - 1);
+			}
+			for(int i = 0; i < sizeWin; i++){
+				if( board[i] == board[i - (lines.length - 1)]){
+					countDr = countDr + 1;
+				}
+				i = i - (lines.length - 1);
+			}
+			if(countDr == sizeWin){
+				if (level % 2 == 0){
+					gameState = XWIN;
+				}
+				else{
+					gameState = OWIN;
+				}
+			}
+		}
+
+		// check diagonal "\"
+		else if(gameState == PLAYING){
+			for(int i = 0; i < sizeWin; i++){
+				if( board[i] == board[i + (lines.length + 1)]){
+					countDl = countDl + 1;
+				}
+				i = i + (lines.length + 1);
+			}
+			for(int i = 0; i < sizeWin; i++){
+				if( board[i] == board[i - (lines.length + 1)]){
+					countDl = countDl + 1;
+				}
+				i = i - (lines.length + 1);
+			}
+			if(countDl == sizeWin){
+				if (level % 2 == 0){
+					gameState = XWIN;
+				}
+				else{
+					gameState = OWIN;
+				}
+			}
+		}
 	}
-
 
 
    /**
