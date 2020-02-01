@@ -1,5 +1,6 @@
 
 import java.io.Console;
+import java.util.Scanner;
 
 public class TicTacToe{
 
@@ -51,8 +52,13 @@ public class TicTacToe{
         
         game = new TicTacToeGame(lines, columns,win);
 
-        while (gameState.PLAYING && rounds < lines*columns){
-            play()
+        int position;
+        int level = game.getLevel();
+
+        while (level < lines*columns){
+            Scanner scanInt = new Scanner(System.in);
+            position = scanInt.nextInt();
+            game.play(position);
         }
 
         /*
