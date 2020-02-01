@@ -277,7 +277,7 @@ public class TicTacToeGame {
 			}
 			for(int i = 0; i < sizeWin;){
 				if( board[i] == board[i - lines.length]){
-					countV = counV + 1
+					countV = counV + 1;
 				}
 				i = i - lines.length;
 			}
@@ -301,7 +301,7 @@ public class TicTacToeGame {
 			}
 			for(int i = 0; i < sizeWin; i++){
 				if( board[i] == board[i - 1]){
-					countH = countH + 1
+					countH = countH + 1;
 				}
 				i = i - 1;
 			}
