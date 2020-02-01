@@ -292,7 +292,7 @@ public class TicTacToeGame {
 		}
 
 		// check horizontal
-		else if(gameState == PLAYING){
+		if(gameState == PLAYING){
 			for(int i = 0; i < sizeWin; i++){
 				if( board[i] == board[i + 1]){
 					countH = countH + 1;
@@ -317,7 +317,7 @@ public class TicTacToeGame {
 		}
 
 		// check diagonal "/"
-		else if(gameState == PLAYING){
+		if(gameState == PLAYING){
 			for(int i = 0; i < sizeWin; i++){
 				if( board[i] == board[i + (lines.length - 1)]){
 					countDr = countDr + 1;
@@ -341,7 +341,7 @@ public class TicTacToeGame {
 		}
 
 		// check diagonal "\"
-		else if(gameState == PLAYING){
+		if(gameState == PLAYING){
 			for(int i = 0; i < sizeWin; i++){
 				if( board[i] == board[i + (lines.length + 1)]){
 					countDl = countDl + 1;
