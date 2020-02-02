@@ -407,7 +407,7 @@ public class TicTacToeGame {
         		else {
         			cell = " ";
         		}
-        		thisLine += (cellz+ " | ");
+        		thisLine += (cell+ " | ");
         		cellz++;
         	}
         	boardString += thisLine + nextLine;
