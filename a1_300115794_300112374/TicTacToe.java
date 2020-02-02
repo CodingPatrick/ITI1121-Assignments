@@ -54,11 +54,13 @@ public class TicTacToe{
         int position;
         int level = game.getLevel();
 
-        while (level < game.board.length-1){
+       while (level < game.board.length-1){
             System.out.println("\n" + game.nextCellValue() + " to play: ");
             Scanner scanInt = new Scanner(System.in);
             position = scanInt.nextInt();
             game.play(position);
+            System.out.println(game);
+        }
         }
 
         /*
