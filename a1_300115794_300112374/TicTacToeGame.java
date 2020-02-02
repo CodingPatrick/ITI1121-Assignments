@@ -211,9 +211,9 @@ public class TicTacToeGame {
 
 		else{
 			board[i-1] = nextCellValue();
-			setGameState(i);
+			setGameState(i-1);
 			System.out.println(level);
-			System.out.println(toString());
+			toString();
 			System.out.println(getGameState());
 			level++;
 			if (level == 9){
@@ -278,20 +278,21 @@ public class TicTacToeGame {
 		int countH = 1;
 		int countDr = 1;
 		int countDl = 1; 
+		int j;
 
 		// check vertical
 		if(gameState == GameState.PLAYING){
-			for(i = 0; i < sizeWin;){
-				if( board[i] == board[i + lines]){
+			for(j = 0; j < sizeWin;){
+				if( board[i] == board[j + columns]){
 					countV = countV + 1;
 				}
-				i = i + lines;
+				j = j + columns;
 			}
-			for(i = 0; i < sizeWin;){
-				if( board[i] == board[i - lines]){
+			for(j = 0; j < sizeWin;){
+				if( board[i] == board[j - columns]){
 					countV = countV + 1;
 				}
-				i = i - lines;
+				j = j - columns;
 			}
 			if(countV == sizeWin){
 				if (level % 2 == 0){
@@ -305,17 +306,17 @@ public class TicTacToeGame {
 
 		// check horizontal
 		if(gameState == GameState.PLAYING){
-			for(i = 0; i < sizeWin; i++){
-				if( board[i] == board[i + 1]){
+			for(j = 0; j < sizeWin;){
+				if( board[i] == board[j + 1]){
 					countH = countH + 1;
 				}
-				i = i + 1;
+				j = j + 1;
 			}
-			for(i = 0; i < sizeWin; i++){
-				if( board[i] == board[i - 1]){
+			for(j = 0; j < sizeWin;){
+				if( board[i] == board[j - 1]){
 					countH = countH + 1;
 				}
-				i = i - 1;
+				j = j - 1;
 			}
 
 			if(countH == sizeWin){
@@ -330,17 +331,17 @@ public class TicTacToeGame {
 
 		// check diagonal "/"
 		if(gameState == GameState.PLAYING){
-			for(i = 0; i < sizeWin; i++){
-				if( board[i] == board[i + (lines - 1)]){
+			for(j = 0; j < sizeWin;){
+				if( board[i] == board[j + (columns - 1)]){
 					countDr = countDr + 1;
 				}
-				i = i + (lines - 1);
+				j = j + (columns - 1);
 			}
-			for(i = 0; i < sizeWin; i++){
-				if( board[i] == board[i - (lines - 1)]){
+			for(j = 0; j < sizeWin;){
+				if( board[i] == board[j - (columns - 1)]){
 					countDr = countDr + 1;
 				}
-				i = i - (lines - 1);
+				j = j - (columns - 1);
 			}
 			if(countDr == sizeWin){
 				if (level % 2 == 0){
@@ -354,17 +355,17 @@ public class TicTacToeGame {
 
 		// check diagonal "\"
 		if(gameState == GameState.PLAYING){
-			for(i = 0; i < sizeWin; i++){
-				if( board[i] == board[i + (lines + 1)]){
+			for(j = 0; j < sizeWin;){
+				if( board[i] == board[j + (columns + 1)]){
 					countDl = countDl + 1;
 				}
-				i = i + (lines + 1);
+				j = j + (columns + 1);
 			}
-			for(i = 0; i < sizeWin; i++){
-				if( board[i] == board[i - (lines + 1)]){
+			for(j = 0; j < sizeWin;){
+				if( board[i] == board[j - (columns + 1)]){
 					countDl = countDl + 1;
 				}
-				i = i - (lines + 1);
+				j = j - (columns + 1);
 			}
 			if(countDl == sizeWin){
 				if (level % 2 == 0){
