@@ -1,4 +1,3 @@
-
 import java.io.Console;
 import java.util.Scanner;
 
@@ -55,7 +54,8 @@ public class TicTacToe{
         int position;
         int level = game.getLevel();
 
-        while (level < lines*columns){
+        while (level < game.board.length-1){
+            System.out.println("\n" + game.nextCellValue() + " to play: ");
             Scanner scanInt = new Scanner(System.in);
             position = scanInt.nextInt();
             game.play(position);
