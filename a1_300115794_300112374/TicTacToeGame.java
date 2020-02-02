@@ -24,7 +24,7 @@ public class TicTacToeGame {
    /**
 	* gameState records the current state of the game.
 	*/
-	public GameState gameState;
+	public GameState gameState = GameState.PLAYING;
 
 
    /**
@@ -173,12 +173,12 @@ public class TicTacToeGame {
     *  the value at index i in the variable board.
   	*/
 	public CellValue valueAt(int i) {
-		if (0<i && i<lines*columns){
+		if (0<i && i<=lines*columns){
 			return board[i-1];
 		}
 		else {
-			System.out.println("Index value is invalid");
 			return null;
+
 		}
 	}
 
@@ -201,28 +201,36 @@ public class TicTacToeGame {
     * selected by the next player
   	*/
 	public void play(int i) {
-		if (((i-1) < 0)|| (i > (lines*columns))){
-			System.out.print("Index value is invalid");
+		//System.out.print(i+" i"); 
+		if (0> i-1 || i-1>board.length){
+			System.out.print("\n invalid index \n"); // test purposes
 		}
 		else if (board[i-1] != CellValue.EMPTY){
-			System.out.print("Index value is invalid, cell is not empty");
+			System.out.print("\n Index value is invalid, cell is not empty\n");
 		}
 
 		else{
 			board[i-1] = nextCellValue();
-			level++;
 			setGameState(i);
-			toString();
-			getGameState();
+			System.out.println(level);
+			System.out.println(toString());
+			System.out.println(getGameState());
+			level++;
+			if (level == 9){
+				gameState = GameState.DRAW;
+				System.out.print("\nIt is a draw!\n");
+			}
+			//System.out.print("\n" + gameState); // test purposes
 			if (gameState != GameState.PLAYING){
 				if (gameState == GameState.XWIN){
-					System.out.print("X has won!");
+					System.out.print("\nX has won!\n");
 				}
 				else if (gameState == GameState.OWIN){
-					System.out.print("O has won!");
+					System.out.print("\nO has won!\n");
 				}
 				else {
-					System.out.print("It is a draw!");
+					gameState = GameState.DRAW;
+					System.out.print("\nIt is a draw!\n");
 				}
 			}
 
@@ -386,18 +394,26 @@ public class TicTacToeGame {
 		String thisLine = "";
         String boardString = "";
         int cellz=0;
-        String between = "----";
+        String cell;
 
         for (int i=0; i<lines; i++){
         	for (int j=0; j<columns; j++){
-        		thisLine += (board[cellz]+ " | ");
+        		if (board[cellz]==CellValue.X){
+        			cell = "X";
+        		}
+        		else if (board[cellz]==CellValue.O){
+        			cell = "O";
+        		}
+        		else {
+        			cell = " ";
+        		}
+        		thisLine += (cellz+ " | ");
         		cellz++;
         	}
-        	thisLine = thisLine.substring(0, thisLine.length()-2);
         	boardString += thisLine + nextLine;
         	thisLine = "";
         }
-        boardString = boardString.substring(0, boardString.length()-between.length()-1);
+        System.out.println(boardString);
         return boardString;
 
 		/* so here we do a nested for loop, print board[index] for a cell then + "|" while j < columns
