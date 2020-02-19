@@ -54,13 +54,13 @@ public class TicTacToe{
         }
         
         Player[] players;
-
-        // YOUR CODE HERE
         
         // YOUR CODE HERE
         /*
         big while loop (while game.GetameState == GameState.PLAYING)
         idk how to use the list of players atm
+          my guess is to have human as 0 and bot as 1 and then alternate between the two when finding turns
+          but im not rlly sure how to do that rn
         to see who starts, if (level == 0){
         random number = generator.nextInt(2); ==> so either 0 or 1 for the list
         then you know whos turn it is to play
