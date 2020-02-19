@@ -56,8 +56,27 @@ public class TicTacToe{
         Player[] players;
 
         // YOUR CODE HERE
-        game = new TicTacToeGame(lines, columns,win);
         
+        // YOUR CODE HERE
+        /*
+        big while loop (while game.GetameState == GameState.PLAYING)
+        idk how to use the list of players atm
+        to see who starts, if (level == 0){
+        random number = generator.nextInt(2); ==> so either 0 or 1 for the list
+        then you know whos turn it is to play
+        if its robot, just call the computer and thats it
+        otherwise call human player then print when its succesful
+        when theres a winner, scanner for y to play again
+        if not a y then break
+        if it is a y then reitiniate game and everything execept for level
+            for this im thinking putting an even bigger loop on top of the hwile
+            so ex while keepPlaying and we initiate keepPlaying as true
+            initiate a variable for genLevel=0 before the loops
+            so that if they wanna keep playing, before restarting the bigger loop, assign genLevel += level
+            after initializing game again, do level += genLevel
+
+        }
+        */
 
     }
 
