@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 
 public class TicTacToe{
 
@@ -12,7 +12,11 @@ public class TicTacToe{
      * @param args
      *            command line parameters
      */
-     public static void main(String[] args) {
+
+    int genLevel = 0;
+    boolean keepPlaying = true;
+
+    public static void main(String[] args) {
 
         StudentInfo.display();
 
@@ -54,14 +58,13 @@ public class TicTacToe{
         }
         
         Player[] players;
-        
+
         // YOUR CODE HERE
         /*
         big while loop (while game.GetameState == GameState.PLAYING)
         idk how to use the list of players atm
           my guess is to have human as 0 and bot as 1 and then alternate between the two when finding turns
-          but im not rlly sure how to do that rn
-        to see who starts, if (level == 0){
+          but im not rlly sure how to do that rn        to see who starts, if (level == 0){
         random number = generator.nextInt(2); ==> so either 0 or 1 for the list
         then you know whos turn it is to play
         if its robot, just call the computer and thats it
@@ -77,7 +80,31 @@ public class TicTacToe{
 
         }
         */
-
+        
+        while (keepPlaying){
+            game = new TicTacToeGame(lines, columns,win);
+            while (game.getGameState() == GameState.PLAYING){
+                if (genLevel == 0){
+                    playerTurn = generator.nextInt(2);
+                }
+                // here add two types of players into the list
+                System,out.println("Player " + (playerTurn +1) + "turn.");
+                if (players[playerTurn] == ComputerRandomPlayer){ 
+                // ik this is wrong but checks if its a computer player from players
+                    play(game);
+                }
+                else{
+                    System.out.println(game);
+                    System.out.print(game.nextCellValue() + " to play: ");
+                    play(game);
+                }
+            System.out.println("Play again (Y)?: ");
+            Scanner scanStr = new Scanner(System.in);
+            answer = scanStr.next();
+            if (answer != "y"){
+                keepPlaying = false;
+            }
+        genLevel += game.getLevel();
+        }
     }
-
 }
