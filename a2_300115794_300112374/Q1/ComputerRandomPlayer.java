@@ -12,6 +12,8 @@ public class ComputerRandomPlayer extends Player {
 		for 1<= number <= lines*columns:
 		number = 1 + generator.nextInt(lines*columns);
 		*/
+
+		// idk if this works because idk if im calling the variables correctly
 		ranNumber =  1 + generator.nextInt(lines*columns);
 		while (game.board[ranNumber] != CellValue.EMPTY){
 			ranNumber =  1 + generator.nextInt(lines*columns);
@@ -23,7 +25,7 @@ public class ComputerRandomPlayer extends Player {
 			System.out.println("hum, extending a finished game... keeping original winner");
 		}	
 		else {
-			game.setGameState(i);			
+			game.setGameState(ranNumber);			
 		}
 
 
