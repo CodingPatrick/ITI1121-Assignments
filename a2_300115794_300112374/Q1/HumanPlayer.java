@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 public class HumanPlayer extends Player {
 
@@ -16,8 +15,8 @@ public class HumanPlayer extends Player {
 		if it is then just contiue
 		*/
 
-		Scanner scanInt = new Scanner(System.in);
-		position = scanInt.nextInt();
+		String answer = console.readLine();
+		position = Integer.parseInt(answer)-1;
 
 		if(position < 0 || position >= game.lines*game.columns){
 			System.out.println("Illegal position: " + position);
@@ -27,8 +26,8 @@ public class HumanPlayer extends Player {
 			System.out.println("CellValue not empty: " + position + " in game " + toString());		
 			return;	
 		}
-
-		game.board[position] = nextCellValue();
+		// idk if this works because idk if im calling the variables correctly
+		game.board[position] = game.nextCellValue();
 		game.level++;
 		if(game.gameState != GameState.PLAYING) {
 			System.out.println("hum, extending a finished game... keeping original winner");
