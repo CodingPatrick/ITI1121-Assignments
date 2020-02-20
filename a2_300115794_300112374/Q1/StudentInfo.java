@@ -16,9 +16,9 @@ public class StudentInfo {
     public static void display() {
 
         System.out.println("************************************************************");
+        System.out.println("*    Kamil Adjali,        300115794,       section D       *");
         System.out.println("*                                                          *");
-        System.out.println("*                                                          *");
-        System.out.println("*                                                          *");
+        System.out.println("*    Patrick Loranger,    300112374,       section D       *");
         System.out.println("*                                                          *");
         System.out.println("************************************************************");
         System.out.println();
