@@ -1,10 +1,9 @@
-public class ComputerRandomPlayer extends Player {
+public class ComputerRandomPlayer implements Player {
 
 	boolean valid;
 	int ranNumber;
-	TicTacToeGame game;
 
-	public void play(game){
+	public void play(TicTacToeGame game){
 		/* checks if its playable
 		chooses a random input
 		if valid plays and returns
@@ -14,19 +13,14 @@ public class ComputerRandomPlayer extends Player {
 		*/
 
 		// idk if this works because idk if im calling the variables correctly
-		ranNumber =  1 + generator.nextInt(lines*columns);
-		while (game.board[ranNumber] != CellValue.EMPTY){
-			ranNumber =  1 + generator.nextInt(lines*columns);
-			}
+
+		ranNumber = Utils.generator.nextInt(game.lines*game.columns);
+
+		while (game.valueAt(ranNumber) != CellValue.EMPTY) {
+           	ranNumber = Utils.generator.nextInt(game.lines*game.columns);
 		}
-		game.board[ranNumber] = game.nextCellValue();
-		game.level++;
-		if(game.gameState != GameState.PLAYING) {
-			System.out.println("hum, extending a finished game... keeping original winner");
-		}	
-		else {
-			game.setGameState(ranNumber);			
-		}
+		
+		game.play(ranNumber);
 
 
 	}
