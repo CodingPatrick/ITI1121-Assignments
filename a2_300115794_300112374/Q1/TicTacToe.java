@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class TicTacToe{
 
    /**
@@ -12,9 +10,6 @@ public class TicTacToe{
      * @param args
      *            command line parameters
      */
-
-    int genLevel = 0;
-    boolean keepPlaying = true;
 
     public static void main(String[] args) {
 
@@ -59,52 +54,50 @@ public class TicTacToe{
         
         Player[] players;
 
-        // YOUR CODE HERE
-        /*
-        big while loop (while game.GetameState == GameState.PLAYING)
-        idk how to use the list of players atm
-          my guess is to have human as 0 and bot as 1 and then alternate between the two when finding turns
-          but im not rlly sure how to do that rn        to see who starts, if (level == 0){
-        random number = generator.nextInt(2); ==> so either 0 or 1 for the list
-        then you know whos turn it is to play
-        if its robot, just call the computer and thats it
-        otherwise call human player then print when its succesful
-        when theres a winner, scanner for y to play again
-        if not a y then break
-        if it is a y then reitiniate game and everything execept for level
-            for this im thinking putting an even bigger loop on top of the hwile
-            so ex while keepPlaying and we initiate keepPlaying as true
-            initiate a variable for genLevel=0 before the loops
-            so that if they wanna keep playing, before restarting the bigger loop, assign genLevel += level
-            after initializing game again, do level += genLevel
+        int genLevel = 0;
+        boolean keepPlaying = true;
+        int playerTurn=0;
 
-        }
-        */
+        players = new Player[2];
+
+        players[0] = new HumanPlayer();
+        players[1] = new ComputerRandomPlayer();
+
         
         while (keepPlaying){
             game = new TicTacToeGame(lines, columns,win);
-            while (game.getGameState() == GameState.PLAYING){
-                if (genLevel == 0){
-                    playerTurn = generator.nextInt(2);
+            
+            while (game.getGameState() == GameState.PLAYING){ 
+                if (genLevel == 0){     
+                    playerTurn = Utils.generator.nextInt(2); // either 0 or 1
                 }
-                // here add two types of players into the list
-                System,out.println("Player " + (playerTurn +1) + "turn.");
-                if (players[playerTurn] == ComputerRandomPlayer){ 
-                // ik this is wrong but checks if its a computer player from players
-                    play(game);
+                else {
+                    if (genLevel == 1 && playerTurn == 1){
+                        playerTurn = 0;
+                        genLevel++;
+                    } // this is to prevent an error when the bot is picked to play first
+                    else{
+                        playerTurn = genLevel % 2;
+                    }
+                }
+                System.out.println("Player " + (playerTurn +1) + " turn."); 
+                if (players[playerTurn] instanceof ComputerRandomPlayer){  // checks if its a bot (doesnt print the boarf when its the bot)
+                    players[playerTurn].play(game);
+                    genLevel++;
                 }
                 else{
-                    System.out.println(game);
-                    System.out.print(game.nextCellValue() + " to play: ");
-                    play(game);
+                    System.out.println(game); 
+                    System.out.print(game.nextCellValue() + " to play: "); 
+                    players[playerTurn].play(game);
+                    genLevel++;
                 }
-            System.out.println("Play again (Y)?: ");
-            Scanner scanStr = new Scanner(System.in);
-            answer = scanStr.next();
-            if (answer != "y"){
-                keepPlaying = false;
             }
-        genLevel += game.getLevel();
+            System.out.println(game);
+            System.out.print("Play again (Y)?: "); 
+            String answer = Utils.console.readLine();
+            if (answer != "y" || answer != "Y"){ // if the answer is not yes, changes keep playing to false and ends loop
+              keepPlaying = false;
+            }
         }
     }
 }
