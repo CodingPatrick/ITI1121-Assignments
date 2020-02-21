@@ -1,5 +1,5 @@
 public interface Player {
 	
-	public void play(TicTacToeGame);
-	
+	public void play(TicTacToeGame game);
+
 }
