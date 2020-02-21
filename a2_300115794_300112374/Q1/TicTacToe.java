@@ -95,7 +95,7 @@ public class TicTacToe{
             System.out.println(game);
             System.out.print("Play again (Y)?: "); 
             String answer = Utils.console.readLine();
-            if (answer != "y" || answer != "Y"){ // if the answer is not yes, changes keep playing to false and ends loop
+            if (!(answer.equals("y") || answer.equals("Y"))) { // if the answer is not yes, changes keep playing to false and ends loop
               keepPlaying = false;
             }
         }
