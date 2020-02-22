@@ -24,3 +24,4 @@ public class HumanPlayer implements Player {
 		game.play(position);
 	}
 }
+ 
