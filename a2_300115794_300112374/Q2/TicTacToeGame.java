@@ -115,19 +115,19 @@ public class TicTacToeGame {
 
 		 */
 		 
-		 //assign all the variables of base to this
+		// assign all the variables of base to this
 		this.lines = base.lines;
 		this.columns = base.columns;
 		this.sizeWin = base.sizeWin;
 		this.gameState = base.getGameState();
 		this.level = base.getLevel();
+		
 		//copy the board
-		for (int i=0; i < this.lines*this.columns; i++){
+		for (int i=0; i < (this.lines * this.columns); i++){
 	 		this.board[i] = base.board[i];
 		}
-		//play on the copy at the position next
+		// play on the copy at the position next
 		this.play(next);
-	  
 
 	}
 
@@ -146,7 +146,7 @@ public class TicTacToeGame {
 
 		/* Checks if both boards have the same characteristics */
 		if ( this.lines == other.lines && this.columns == other.columns && this.getGameState() == other.getGameState() 
-			&& this.getLevel() == other.getLevel() ){
+			&& this.getLevel() == other.getLevel() && this.sizeWin == other.sizeWin){
 
 			/* Checks if both boards have the X's and O's at the same spots */
 			for (int i = 0; i < (this.columns * this.lines); i++){
@@ -159,8 +159,9 @@ public class TicTacToeGame {
 				}
 			}
 		/* Returns false if they don't have the same characteristics at the beginning */
-		} 
-		return false;//removed else because of error when compiling might be source of problems later
+		} else {
+			return false;
+		}
 	}
 
    /**
