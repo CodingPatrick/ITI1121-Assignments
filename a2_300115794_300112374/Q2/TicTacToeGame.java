@@ -106,6 +106,13 @@ public class TicTacToeGame {
 
 		// YOUR CODE HERE
 
+		/* 
+		   So basically all we have to do is understand what a deep-copy is.
+
+		   Once we know that, we just have to code a loop that creates a deep-copy of the 
+		   "base" TicTacToe board and saves it somewhere. We take that copy and modify it so 
+		   that the original "base" is not editied when we add a new X or O.
+
 	}
 
 
