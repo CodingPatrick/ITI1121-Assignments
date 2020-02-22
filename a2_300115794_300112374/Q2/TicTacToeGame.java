@@ -104,7 +104,6 @@ public class TicTacToeGame {
 
 	public TicTacToeGame(TicTacToeGame base, int next){
 
-
 		// YOUR CODE HERE
 
 	}
@@ -122,6 +121,24 @@ public class TicTacToeGame {
 
 		// YOUR CODE HERE
 
+		/* Checks if both boards have the same characteristics */
+		if ( this.lines == other.lines && this.columns == other.columns && this.getGameState() == other.getGameState() 
+			&& this.getLevel() == other.getLevel() ){
+
+			/* Checks if both boards have the X's and O's at the same spots */
+			for (int i = 0; i < (this.columns * this.lines); i++){
+				/* If they don't, return false */
+				if(this.board[i] != other.board[i]){
+					return false;
+				/* If the if statement is never met, it means they have the same X's and O's, return true  */
+				} else {
+					return true;
+				}
+			}
+		/* Returns false if they don't have the same characteristics at the beginning */
+		} else {
+			return false;
+		}
 	}
 
    /**
