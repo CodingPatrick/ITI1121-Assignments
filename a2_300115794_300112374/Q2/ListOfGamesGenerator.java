@@ -36,21 +36,30 @@ public class ListOfGamesGenerator {
     */
     LinkedList<LinkedList<TicTacToeGame>> mainList = new LinkedList<LinkedList<TicTacToeGame>>(); // create a main list
     TicTacToeGame game = new TicTacToeGame(lines, columns, winLength);
+    int numSubL = 0;
    
 
     for (int i=0; i < lines*columns; i++){
-      LinkedList<TicTacToeGame> subList = new LinkedList<TicTacToeGame>();  // for every index of the main list you create a sublist
-      for (int k=0; k<subList.size(); k++){
-        if (game.equals(k)){
-          subList.remove(k); // removes dupes from sublist
+      if (numSubL == 0){
+        LinkedList<TicTacToeGame> subList = new LinkedList<TicTacToeGame>();  // for every index of the main list you create a sublist
+        subList.add(game);
+        mainList.add(subList);
+      } 
+      else{
+        LinkedList<TicTacToeGame> subList = new LinkedList<TicTacToeGame>();  // for every index of the main list you create a sublist
+        for (int k=0; k<subList.size(); k++){
+          if (game.equals(k)){
+            subList.remove(k); // removes dupes from sublist
+          }
         }
-      }
-      for (int j=0; j< lines*columns; j++){
-        if ((game.valueAt(j) == CellValue.EMPTY) && (game.getGameState() == GameState.PLAYING)){ 
-          subList.add(new TicTacToeGame(game, j)); //if the position is valid, creates a new game at position
+        for (int j=0; j< lines*columns; j++){
+          if ((game.valueAt(j) == CellValue.EMPTY) && (game.getGameState() == GameState.PLAYING)){ 
+            subList.add(new TicTacToeGame(game, j)); //if the position is valid, creates a new game at position
+          }
         }
+        mainList.add(subList); //add sublist to mainlist
       }
-      mainList.add(subList); //add sublist to mainlist
+      numSubL++;
     }
     return mainList;
   }
