@@ -158,7 +158,9 @@ public class TicTacToeGame {
 					return true;
 				}
 			}
+		}
 		/* Returns false if they don't have the same characteristics at the beginning */
+		
 		return false;
 	}
 
