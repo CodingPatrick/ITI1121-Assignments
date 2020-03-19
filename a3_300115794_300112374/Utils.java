@@ -164,7 +164,7 @@ public class Utils {
                 transformedBoard[(i*columns)-j] = tmp; // puts the inital value of position in the other side of the reflection
                 position++;
             }
-            position += (columns - Math.floorDiv(columns, 2));
+            position += (columns - Math.floorDiv(columns, 2)); // moves the position to the next row
         }
 
     }
