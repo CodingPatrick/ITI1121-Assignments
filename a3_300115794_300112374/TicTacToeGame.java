@@ -59,6 +59,15 @@ public class TicTacToeGame {
 
 	// ADD HERE THE REQUIRED VARIABLEs
 
+	private int numTransformations;
+
+	private int transformCounter;
+
+	private Transformation[] squareBoardTrans = {ID, ROT, ROT, ROT, HSYM ,ROT, ROT, ROT};
+
+	private Transformation[] otherBoardTrans = {ID, HSYM,VSYM, HSYM};
+	
+
 
 
    /**
@@ -421,8 +430,19 @@ public class TicTacToeGame {
 
     public void reset(){
  
-    	// YOUR CODE HERE
+    	// YOUR CODE HERE2
+    	transformCounter = 0; // resets the counter
 
+    	if(lines == columns){
+    		numTransformations = squareBoardTrans.length; // sets the number of transformations depending on if its a square or not
+    	}
+    	else{
+    		numTransformations = otherBoardTrans.length;
+    	}
+
+    	for (int i=0; i< lines*columns; i++){	// resets the board back to its original state
+    		transformedBoard[i] = i;
+    	}
     }
 
     /**
@@ -434,6 +454,10 @@ public class TicTacToeGame {
     public boolean hasNext(){
 
     	// YOUR CODE HERE
+    	if(transformCounter == numTransformations){
+    		return false;	// returns false if the counter is the same number as the length of the array with the transformations
+    	}
+    	return true;	// otherwise returns true
     }
 
     /**
@@ -442,9 +466,28 @@ public class TicTacToeGame {
      * Requires that this.hasNext() == true
      */
     public void next(){
-
-    	// YOUR CODE HERE
-
+    	if (lines == columns){ // checks if the board is a square or not
+    		if (transformedBoard[transformCounter] == Transformation.ID){
+    			transformedBoard.reset(); // if the position is ID then resets the board back to normal
+    		}
+    		else if (transformedBoard[transformCounter] == Transformation.ROT){
+    			Utils.rotate(lines, columns, transformedBoard); // if the position is ROT then rotate the board
+    		else if (transformedBoard[transformCounter] == Transformation.HSYM){
+    			Utils.horiztonalFlip(lines, columns, transformedBoard); // if the position is HSYM then flips the board horizontally
+    		}
+    		transformCounter++;
+    	}
+    	else{
+    		if (transformedBoard[transformCounter] == Transformation.ID){
+    			transformedBoard.reset();
+    		else if (transformedBoard[transformCounter] == Transformation.HSYM){
+    			Utils.horiztonalFlip(lines, columns, transformedBoard);
+    		}
+    		else if(transformedBoard[transformCounter] == Transformation.VSYM){
+    			Utils.verticalFlip(lines, columns, transformedBoard);
+    		}
+    		transformCounter++;
+    	}
     }
 
  
@@ -460,7 +503,28 @@ public class TicTacToeGame {
   	public boolean equalsWithSymmetry(TicTacToeGame other){
 
   		// YOUr CODE HERE
+  		boolean equalsTF = false; 
 
+  		if (other == null){
+  			return equalsTF;
+  		}
+  		if (this.lines != other.lines || this.columns != other.columns){
+  			return equalsTF;
+  		}
+
+  		for (int i=0; i<this.board.length; i++){
+  			this.transformedBoard = this.board[i]; // deep copy of board to transformed board
+  		}
+
+  		while (this.transformedBoard.hasNext()){
+  			//check if they're the same somehow
+  			if (equalsTF){
+  				return equalsTf;	// if it is equals then return true
+  			}
+  			transformedBoard.next(); // if not then transfroms again and checks if they're equal again
+  		}
+
+  		return false; // if they're not equal then it finishes the while loop and returns false
     }
 
      /**
