@@ -446,7 +446,7 @@ public class TicTacToeGame {
  
     	// YOUR CODE HERE2
     	for (int i=0; i< lines*columns; i++){	// resets the board back to its original state
-    		transformedBoard[i] = i;
+    		this.transformedBoard[i] = i;
     	}
     }
 
@@ -510,28 +510,29 @@ public class TicTacToeGame {
   	public boolean equalsWithSymmetry(TicTacToeGame other){
 
   		// YOUr CODE HERE
-  		boolean equalsTF = false; 
+  		if(other == null) {
+    		return false;
+    	}
+    	if((level != other.level) 	||
+    		(lines != other.lines) 	||
+    		(columns != other.columns)||
+    		(sizeWin != other.sizeWin)){
+    		return false;
+    	}
+		this.reset();
 
-  		if (other == null){
-  			return equalsTF;
-  		}
-  		if (this.lines != other.lines || this.columns != other.columns){
-  			return equalsTF;
-  		}
-
-  		for (int i=0; i<this.board.length; i++){
-  			this.transformedBoard[i] = this.board[i]; // deep copy of board to transformed board
-  		}
-
-  		while (this.hasNext()){
-  			//check if they're the same somehow
-  			if (equalsTF){
-  				return equalsTF;	// if it is equals then return true
-  			}
-  			this.next(); // if not then transfroms again and checks if they're equal again
-  		}
-
-  		return false; // if they're not equal then it finishes the while loop and returns false
+		while(this.hasNext()){
+			this.next();
+			for(int i = 0; i < board.length ; i++ ) {
+				if(board[i]!= other.board[transformedBoard[i]]) {
+					return false;
+				}
+				else if(i == board.length-1){
+					return true;
+				}
+			}
+		}
+		return false;
     }
 
      /**
