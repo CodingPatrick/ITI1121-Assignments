@@ -120,10 +120,9 @@ public class TicTacToeGame {
     	else{
     		numTransformations = otherBoardTrans.length;
     	}
-    	transformedBoard = new int[lines*columns];
-		for (int i = 0; i < lines*columns ; i ++) {
-			transformedBoard[i] = i;
-		}
+    	for (int i = 0; i < lines*columns ; i ++) {
+            transformedBoard = new int[lines*columns];
+        }
 	}
 
 
@@ -183,10 +182,9 @@ public class TicTacToeGame {
     	else{
     		numTransformations = otherBoardTrans.length;
     	}
-    	transformedBoard = new int[lines*columns];
-    	for(int i = 0; i < lines*columns ; i ++) {
-			transformedBoard[i] = i;
-		}
+    	for (int i = 0; i < lines*columns ; i ++) {
+            transformedBoard = new int[lines*columns];
+        }
 	}
 
 
@@ -533,8 +531,8 @@ public class TicTacToeGame {
 		while(this.hasNext()){
 			this.next();
 			for(int i = 0; i < board.length ; i++ ) {
-				if(board[i]!= other.board[transformedBoard[i]]) {
-					return false;
+				if(board[i] != other.board[transformedBoard[i]]) {
+					break;
 				}
 				else if(i == board.length-1){
 					return true;
