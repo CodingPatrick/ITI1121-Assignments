@@ -59,12 +59,16 @@ public class TicTacToeGame {
 
 	// ADD HERE THE REQUIRED VARIABLEs
 
-	private int numTransformations;
+	// max number of transformations 
+	private int numTransformations; 
 
+	// counter for the transformations that have passed (index for the transformation arrays)
 	private int transformCounter;
 
+	// transformation array for square boards
 	private Transformation[] squareBoardTrans = {Transformation.ID, Transformation.ROT, Transformation.ROT, Transformation.ROT, Transformation.HSYM ,Transformation.ROT, Transformation.ROT, Transformation.ROT};
 
+	// transformation array for non square boards
 	private Transformation[] otherBoardTrans = {Transformation.ID, Transformation.HSYM,Transformation.VSYM, Transformation.HSYM};
 
 
@@ -112,16 +116,16 @@ public class TicTacToeGame {
 		gameState = GameState.PLAYING;
 
 		// UPDATE HERE IF NEEDED
-		transformCounter = 0; // resets the counter
+		transformCounter = 0; // sets the counter to 0
 
-    	if(lines == columns){
-    		numTransformations = squareBoardTrans.length; // sets the number of transformations depending on if its a square or not
+    	if(lines == columns){ // checks if the board is a square
+    		numTransformations = squareBoardTrans.length; // assingns the needed number of transformations
     	}
     	else{
     		numTransformations = otherBoardTrans.length;
     	}
     	for (int i = 0; i < lines*columns ; i ++) {
-            transformedBoard = new int[lines*columns];
+            transformedBoard = new int[lines*columns]; // initializes the transformed board
         }
 	}
 
@@ -174,16 +178,16 @@ public class TicTacToeGame {
 		}
 
 		// UPDATE HERE IF NEEDED
-		transformCounter = 0; // resets the counter
+		transformCounter = 0; // sets the counter to 0
 
-    	if(lines == columns){
-    		numTransformations = squareBoardTrans.length; // sets the number of transformations depending on if its a square or not
+    	if(lines == columns){ // checks if the board is a square
+    		numTransformations = squareBoardTrans.length; // assingns the needed number of transformations
     	}
     	else{
     		numTransformations = otherBoardTrans.length;
     	}
     	for (int i = 0; i < lines*columns ; i ++) {
-            transformedBoard = new int[lines*columns];
+            transformedBoard = new int[lines*columns]; // initializes the transformed board
         }
 	}
 
@@ -451,8 +455,8 @@ public class TicTacToeGame {
     public void reset(){
  
     	// YOUR CODE HERE2
-    	transformCounter = 0;
-    	for (int i=0; i< lines*columns; i++){	// resets the board back to its original state
+    	transformCounter = 0; // resets the transformation counter back to 0
+    	for (int i=0; i< lines*columns; i++){	// resets the transformed board back to its original state
     		this.transformedBoard[i] = i;
     	}
     }
@@ -467,7 +471,7 @@ public class TicTacToeGame {
 
     	// YOUR CODE HERE
     	if(transformCounter == numTransformations){
-    		return false;	// returns false if the counter is the same number as the length of the array with the transformations
+    		return false;	// returns false if the counter is the same number as the length of the transformation array
     	}
     	return true;	// otherwise returns true
     }
@@ -488,9 +492,9 @@ public class TicTacToeGame {
     		else if (squareBoardTrans[transformCounter] == Transformation.HSYM){
     			Utils.horizontalFlip(lines, columns, transformedBoard); // if the position is HSYM then flips the board horizontally
     		}
-    		transformCounter++;
+    		transformCounter++; // increments the transformation counter
     	}
-    	else{
+    	else{ // same thing as before but with otherBoardTrans[] instead of squareBoardTrans[]
     		if (otherBoardTrans[transformCounter] == Transformation.ID){
     			this.reset();
     		}
@@ -500,7 +504,7 @@ public class TicTacToeGame {
     		else if(otherBoardTrans[transformCounter] == Transformation.VSYM){
     			Utils.verticalFlip(lines, columns, transformedBoard);
     		}
-    		transformCounter++;
+    		transformCounter++; // increments the transformation counter
     	}
     }
 
@@ -518,28 +522,32 @@ public class TicTacToeGame {
 
   		// YOUr CODE HERE
   		if(other == null) {
-    		return false;
+    		return false; // if other is null then returns false
     	}
     	if((level != other.level) 	||
     		(lines != other.lines) 	||
     		(columns != other.columns)||
     		(sizeWin != other.sizeWin)){
-    		return false;
+    		return false; // if one of the parameters of other isnt the same as ours, return false
     	}
-		this.reset();
+		this.reset(); // make sure that the transformed board is in it's original state
 
 		while(this.hasNext()){
-			this.next();
+			/*
+			apply transformation before the loop because we need to compare
+			a transformed version of the board to other to check for symmetry
+			*/
+			this.next(); 
 			for(int i = 0; i < board.length ; i++ ) {
-				if(board[i] != other.board[transformedBoard[i]]) {
-					break;
+				if(other.board[transformedBoard[i]] != board[i]) {	
+					break; // if one of the indexes is not the same then that means its not equals so we can just break
 				}
-				else if(i == board.length-1){
-					return true;
+				else if(board.length-1 == i){ // if this is true then i is at its last index which means its identical
+					return true; 
 				}
 			}
 		}
-		return false;
+		return false; // it only gets here if we break so that means the boards aren't equal
     }
 
      /**
