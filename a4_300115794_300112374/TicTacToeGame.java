@@ -56,9 +56,20 @@ public class TicTacToeGame {
      */
 	protected int[] transformedBoard;
 
+	private  static final Transformation[] allTransformationsSquare = 
+    	{Transformation.ID,Transformation.ROT,Transformation.ROT,
+    	 Transformation.ROT,Transformation.HSYM,Transformation.ROT,
+    	 Transformation.ROT,Transformation.ROT};
 
-	// ADD HERE THE REQUIRED VARIABLEs
 
+    private  static final Transformation[] allTransformationsNonSquare = 
+    	{Transformation.ID,Transformation.HSYM,
+		 Transformation.VSYM,Transformation.HSYM};	
+
+
+	private  Transformation[] allTransformations;
+
+	private int currentTransformation;
 
 
    /**
@@ -104,8 +115,12 @@ public class TicTacToeGame {
 		level = 0;
 		gameState = GameState.PLAYING;
 
-		// UPDATE HERE IF NEEDED
-	}
+		if(lines == columns) {
+			allTransformations = allTransformationsSquare;
+		} else {
+			allTransformations = allTransformationsNonSquare;			
+		}
+		transformedBoard = new int[lines*columns];	}
 
 
    /**
@@ -155,7 +170,7 @@ public class TicTacToeGame {
 			setGameState(next);
 		}
 
-		// UPDATE HERE IF NEEDED
+		reset();
 	}
 
 
@@ -420,9 +435,8 @@ public class TicTacToeGame {
 	 */
 
     public void reset(){
- 
-    	// YOUR CODE HERE
-
+        currentTransformation = -1;
+        transformedBoard = new int[lines*columns];
     }
 
     /**
@@ -432,8 +446,7 @@ public class TicTacToeGame {
      *   true iff there are additional symmetries
      */
     public boolean hasNext(){
-
-    	// YOUR CODE HERE
+        return currentTransformation < (allTransformations.length-1);
     }
 
     /**
@@ -443,11 +456,41 @@ public class TicTacToeGame {
      */
     public void next(){
 
-    	// YOUR CODE HERE
 
+        if(!hasNext()){
+            throw new IllegalStateException("No next transformation");
+        }
+        currentTransformation++;
+        transform(allTransformations[currentTransformation]);
     }
 
- 
+    /**
+     * Applies the transformation specified as parameter
+     * to transformedBoard
+     */
+    private void transform(Transformation type){
+
+        switch(type) {
+            case ID :
+	            for(int i =0 ; i < board.length; i++) {
+	                transformedBoard[i]=i;
+	            }
+	            break;
+            case ROT :
+	            Utils.rotate(lines, columns,transformedBoard);
+    	        break;
+            case VSYM :
+	            Utils.verticalFlip(lines, columns,transformedBoard);
+	            break;
+            case HSYM :
+	            Utils.horizontalFlip(lines, columns,transformedBoard);
+	            break;
+            default:
+            System.out.println("Unknow type: " + type);
+        }
+    }
+
+
 
   /**
 	* Compares this instance of the game with the
@@ -459,8 +502,30 @@ public class TicTacToeGame {
   	*/    
   	public boolean equalsWithSymmetry(TicTacToeGame other){
 
-  		// YOUr CODE HERE
+    	if(other == null) {
+    		return false;
+    	}
+    	if((level != other.level) 	||
+    		(lines != other.lines) 	||
+    		(columns != other.columns)||
+    		(sizeWin != other.sizeWin)){
+    		return false;
+    	}
 
+    	reset();
+    	while(hasNext()){
+    		next();
+    		boolean different = false;
+    		for(int i = 0; i < transformedBoard.length ; i++ ) {
+    			if(board[transformedBoard[i]]!= other.board[i]) {
+    				different = true;
+    				break;
+    			}
+    		}
+    		if(!different)
+    			return true;
+    	}
+    	return false;
     }
 
      /**
