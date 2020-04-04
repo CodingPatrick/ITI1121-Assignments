@@ -45,31 +45,44 @@ public class TicTacToeGame {
 	public final int sizeWin;
 
 
+	/**
+     * the list of all possible symmetries of a nxn board 
+     * can be found be iterating through the transformations
+     * listed in allTransformations
+     */
+    private  static final Transformation[] allTransformationsSquare = 
+    	{Transformation.ID,Transformation.ROT,Transformation.ROT,
+    	 Transformation.ROT,Transformation.HSYM,Transformation.ROT,
+    	 Transformation.ROT,Transformation.ROT};
+
+	/**
+     * the list of all possible symmetries of a nxm board 
+     * can be found be iterating through the transformations
+     * listed in allTransformations
+     */
+    private  static final Transformation[] allTransformationsNonSquare = 
+    	{Transformation.ID,Transformation.HSYM,
+		 Transformation.VSYM,Transformation.HSYM};	
+
+	/**
+     * instance variable to record the transformations for that particular board
+     */
+    private  Transformation[] allTransformations;
+
+    /**
+     * records how far we are in the list of transformations
+     * in allTransformations
+     */
+    private int currentTransformation;
 
     /**
      * transformedBoard is used to iterate through all 
      * game symetries. We use an indirection, so as to not
      * modify the instance variable board. In the
-     * current symmetry the cell at index i is accessed
+     * current symmetrythe cell at index i is accessed
      * via board[transformedBoard[i]]
-     * transformedBoard is "protected" in anticipation of Q2
      */
 	protected int[] transformedBoard;
-
-	private  static final Transformation[] allTransformationsSquare = 
-    	{Transformation.ID,Transformation.ROT,Transformation.ROT,
-    	 Transformation.ROT,Transformation.HSYM,Transformation.ROT,
-    	 Transformation.ROT,Transformation.ROT};
-
-
-    private  static final Transformation[] allTransformationsNonSquare = 
-    	{Transformation.ID,Transformation.HSYM,
-		 Transformation.VSYM,Transformation.HSYM};	
-
-
-	private  Transformation[] allTransformations;
-
-	private int currentTransformation;
 
 
    /**
@@ -114,13 +127,14 @@ public class TicTacToeGame {
 		}
 		level = 0;
 		gameState = GameState.PLAYING;
-
 		if(lines == columns) {
 			allTransformations = allTransformationsSquare;
 		} else {
 			allTransformations = allTransformationsNonSquare;			
 		}
-		transformedBoard = new int[lines*columns];	}
+		transformedBoard = new int[lines*columns];
+
+	}
 
 
    /**
@@ -158,6 +172,9 @@ public class TicTacToeGame {
 			board[i] = base.board[i];
 		}
 		
+		// allTransformations doesn't change so we can share the reference here
+		allTransformations = base.allTransformations;
+
 
 		level = base.level+1;
 
