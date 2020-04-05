@@ -3,69 +3,63 @@ import java.util.LinkedList;
 
 public class ComputerMenacePlayer extends Player {
 
-	// YOUR CODE HERE
+	private LinkedList<LinkedList<MenaceTicTacToeGame>> allGames;
 
-		private LinkedList<LinkedList<MenaceTicTacToeGame>> allGames;
-
+	// generates all possible games 
 	public ComputerMenacePlayer(){
 		super();
 
 		allGames = new LinkedList<LinkedList<MenaceTicTacToeGame>>();
 
-		// start with the empty game
 		allGames.add(new LinkedList<MenaceTicTacToeGame>());
 		allGames.get(0).add(new MenaceTicTacToeGame());
 
-		//build the new games by adding the next moves to the
-		// previously built games
-		for(int i=1; i<= 9; i++) {
+		for(int i=1; i<=9; i++){
 			LinkedList<MenaceTicTacToeGame> newList;
 			newList = new LinkedList<MenaceTicTacToeGame>();
 			allGames.add(newList);
-			for(MenaceTicTacToeGame game: allGames.get(i-1)){
-				if(game.getGameState() == GameState.PLAYING) {
-					for(int j = 0;
-						j < 9;
-						j++) {
-						if(game.valueAt(j) == CellValue.EMPTY) {
-							MenaceTicTacToeGame newGame = new MenaceTicTacToeGame(game,j);
-							//checking that this game was not already found
+			for (MenaceTicTacToeGame game: allGames.get(i-1)){
+				if (game.getGameState() == GameState.PLAYING){
+					for (int j=0; j < 9; j++){
+						if(game.valueAt(j) == CellValue.EMPTY){
+							MenaceTicTacToeGame newGame = new MenaceTicTacToeGame(game, j);
 							boolean isNew = true;
-							for(MenaceTicTacToeGame existingGame: allGames.get(i)){
-								if(newGame.equalsWithSymmetry(existingGame)){
+							for(MenaceTicTacToeGame existingGame; allGames.get(i)){
+								if (newGame.equalsWithSymmetry(existingGame)){
 									isNew = false;
-									break;
+									break
 								}
 							}
-							if(isNew) {
+							if (isNew){
 								newList.add(newGame);
-							}					
+							}
 						}
 					}
 				}
-
 			}
 		}
 
-		// now adding the game outcomes
+		/*
+		I have no idea what this is doing...
+		*/
 		for(int i=8; i>= 0; i--) {
-			for(MenaceTicTacToeGame game: allGames.get(i)){
-				if(game.getGameOutcome() == MenaceTicTacToeGame.NOT_SET) {
+			for(PerfectTicTacToeGame game: allGames.get(i)){
+				if(game.getGameOutcome() == PerfectTicTacToeGame.NOT_SET) {
 					for(int j=0;
 						j < 9;
 						j++) {
 						if(game.valueAt(j) == CellValue.EMPTY) {
-							MenaceTicTacToeGame newGame = new MenaceTicTacToeGame(game,j);
+							PerfectTicTacToeGame newGame = new PerfectTicTacToeGame(game,j);
 							//looking for the game reached by j is played
-							for(MenaceTicTacToeGame existingGame: allGames.get(i+1)){
+							for(PerfectTicTacToeGame existingGame: allGames.get(i+1)){
 								if(newGame.equalsWithSymmetry(existingGame)){
 									// reverse the outcome
-									if(existingGame.getGameOutcome() == MenaceTicTacToeGame.WIN) {
-										game.setMoveOutcome(j,MenaceTicTacToeGame.LOSE);
-									} else if(existingGame.getGameOutcome() == MenaceTicTacToeGame.LOSE) {
-										game.setMoveOutcome(j,MenaceTicTacToeGame.WIN);
-									} else if(existingGame.getGameOutcome() == MenaceTicTacToeGame.DRAW) {
-										game.setMoveOutcome(j,MenaceTicTacToeGame.DRAW);
+									if(existingGame.getGameOutcome() == PerfectTicTacToeGame.WIN) {
+										game.setMoveOutcome(j,PerfectTicTacToeGame.LOSE);
+									} else if(existingGame.getGameOutcome() == PerfectTicTacToeGame.LOSE) {
+										game.setMoveOutcome(j,PerfectTicTacToeGame.WIN);
+									} else if(existingGame.getGameOutcome() == PerfectTicTacToeGame.DRAW) {
+										game.setMoveOutcome(j,PerfectTicTacToeGame.DRAW);
 									} else {
 										System.out.println(existingGame);
 
@@ -83,24 +77,18 @@ public class ComputerMenacePlayer extends Player {
 
 	}
 
-
-	public  void play(TicTacToeGame game) {
-
-		if(game.getLevel() == game.lines*game.columns){
-			throw new IllegalArgumentException("Game is finished already!");
+	// making the game play
+	public void play(TicTacToeGame game){
+		if (game.getLevel() == game.lines*game.columns){
+			throw new IllegalArgumentException("game is already done");
 		}
-	
-		// find the menaceGame corresponding to the state of game
-		for(MenaceTicTacToeGame perfectGame: allGames.get(game.getLevel())){
-			if(perfectGame.equalsWithSymmetry(game)){
-				game.play(perfectGame.choosePerfectMove());
+
+		for (MenaceTicTacToeGame menaceGame: allGames.get(game.getLevel())){
+			if(menaceGame.equalsWithSymmetry(game)){
+				game.play(menaceGame.chooseMove());
 				return;
 			}
 		}
-
-		//Should never reach here
-		throw new IllegalStateException("Game not found: " + game);
-
+		throw new IllegalStateException("game not found: " + game);
 	}
-
 }
